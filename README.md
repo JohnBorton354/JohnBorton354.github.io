@@ -6,14 +6,16 @@ My personal portfolio site, hosted with GitHub Pages.
 
 ## Structure
 
-- `index.html` — the site itself (all content and styling live here)
-- `resume.pdf` — my resume (linked and downloadable from the site)
-- `images/` — project screenshots and photos
+- `index.html` — the site markup
+- `styles.css` — all styling
+- `resume.pdf` — my resume (opens in a pop-up on the site, also downloadable)
+- `images/` — profile picture and project screenshots
 
 ## Editing
 
-Everything is in `index.html`. To make changes, edit that file, commit, and
-push — GitHub Pages redeploys automatically, usually within a minute.
+Content lives in `index.html`, styling in `styles.css`. To make changes, edit
+those files, commit, and push — GitHub Pages redeploys automatically, usually
+within a minute.
 
 ## Setup notes
 

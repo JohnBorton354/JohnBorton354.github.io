@@ -3,108 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- ▸ CHANGE: your name in the browser tab -->
-  <title>John Borton — Portfolio</title>
-  <style>
-    :root {
-      --ink: #1a1a1a;
-      --muted: #5c5c5c;
-      --line: #e2e2e2;
-      --bg: #fbfbf9;
-      --accent: #2f5d50;
-      --maxw: 720px;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: "Georgia", "Times New Roman", serif;
-      color: var(--ink);
-      background: var(--bg);
-      line-height: 1.6;
-    }
-    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
-
-    /* Header / intro */
-    header { padding: 88px 0 40px; }
-    h1 { font-size: 2.6rem; margin: 0 0 8px; letter-spacing: -0.5px; }
-    .tagline { font-size: 1.15rem; color: var(--muted); margin: 0 0 20px; }
-    .links a {
-      color: var(--accent);
-      text-decoration: none;
-      margin-right: 18px;
-      font-family: system-ui, sans-serif;
-      font-size: 0.95rem;
-    }
-    .links a:hover { text-decoration: underline; }
-
-    /* Sections */
-    section { padding: 32px 0; border-top: 1px solid var(--line); }
-    h2 {
-      font-family: system-ui, sans-serif;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--muted);
-      margin: 0 0 20px;
-    }
-    p { margin: 0 0 16px; }
-
-    /* Projects */
-    .project { margin-bottom: 40px; }
-    .project:last-child { margin-bottom: 0; }
-    .project img {
-      width: 100%;
-      height: auto;
-      border: 1px solid var(--line);
-      border-radius: 4px;
-      display: block;
-      margin-bottom: 12px;
-    }
-    .project h3 { margin: 0 0 4px; font-size: 1.25rem; }
-    .project .meta {
-      font-family: system-ui, sans-serif;
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin: 0 0 10px;
-    }
-    .project a {
-      color: var(--accent);
-      font-family: system-ui, sans-serif;
-      font-size: 0.9rem;
-    }
-
-    /* Resume button */
-    .btn {
-      display: inline-block;
-      font-family: system-ui, sans-serif;
-      font-size: 0.95rem;
-      color: #fff;
-      background: var(--accent);
-      padding: 10px 20px;
-      border-radius: 4px;
-      text-decoration: none;
-    }
-    .btn:hover { opacity: 0.9; }
-
-    footer {
-      padding: 40px 0 80px;
-      color: var(--muted);
-      font-family: system-ui, sans-serif;
-      font-size: 0.85rem;
-    }
-  </style>
+  <title>John Borton — Data Engineer &amp; Machine Learning Engineer</title>
+  <meta name="description" content="John Borton — Data Engineer & Machine Learning Engineer. Real-time pipelines, statistical inference, and applied ML for defense and research systems.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0e14'/%3E%3Ctext x='50' y='68' font-family='monospace' font-size='50' font-weight='700' fill='%2322d3ee' text-anchor='middle'%3EJB%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="wrap">
 
     <!-- ▸ INTRO -->
     <header>
-      <h1>John Borton</h1>
-      <p class="tagline">What you do — e.g. Data Scientist · Machine Learning</p>
-      <div class="links">
-        <a href="mailto:you@example.com">Email</a>
-        <a href="https://github.com/johnborton354">GitHub</a>
-        <a href="https://linkedin.com/in/john-borton-a83927179">LinkedIn</a>
+      <div class="avatar">
+        <!-- Drop a square photo at images/profile.jpg to replace the initials below -->
+        <img src="images/profile.jpg" alt="John Borton" onerror="this.remove()">
+      </div>
+      <div class="header-text">
+        <span class="kicker">Data Engineer · Machine Learning Engineer</span>
+        <h1>John Borton</h1>
+        <p class="tagline">
+          Building real-time data pipelines and applying statistical &amp; ML methods to
+          high-throughput systems — with a background spanning defense engineering and physics.
+        </p>
+        <div class="links">
+          <a href="mailto:johnchapmanborton@gmail.com">Email</a>
+          <a href="https://github.com/johnborton354" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://linkedin.com/in/john-borton-a83927179" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn btn-sm" href="resume.pdf" download>Résumé ↓</a>
+        </div>
       </div>
     </header>
 
@@ -112,17 +40,78 @@
     <section>
       <h2>About</h2>
       <p>
-        A short paragraph about who you are, what you work on, and what you're
-        looking for. Two or three sentences is plenty. Keep it specific — mention
-        the tools, domains, or kinds of problems you care about.
+        I'm a data and software engineer specializing in high-volume data pipelines and
+        real-time analytics, with a dual CS/Statistics background and graduate training in
+        data analytics. I design ingestion and transformation systems for heterogeneous,
+        high-throughput data, build automated validation frameworks, and apply statistical
+        and machine learning methods to production and research problems — currently in a
+        defense engineering environment, with a physics minor shaping how I think about
+        measurement and systems.
       </p>
     </section>
 
-    <!-- ▸ RESUME -->
+    <!-- ▸ KEY SKILLS -->
     <section>
-      <h2>Resume</h2>
-      <p>Download my full resume as a PDF.</p>
-      <a class="btn" href="resume.pdf" target="_blank" rel="noopener">View Resume (PDF)</a>
+      <h2>Key Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <h3>Data Engineering</h3>
+          <div class="chips">
+            <span class="chip">ETL / ELT Pipeline Design</span>
+            <span class="chip">Data Wrangling &amp; Cleaning</span>
+            <span class="chip">Schema / DB Design</span>
+            <span class="chip">MySQL</span>
+            <span class="chip">High-Volume Ingestion</span>
+            <span class="chip">Real-Time Stream Analysis</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>ML &amp; Statistics</h3>
+          <div class="chips">
+            <span class="chip">High-Dimensional Regression</span>
+            <span class="chip">Statistical Inference</span>
+            <span class="chip">Statistical Simulation</span>
+            <span class="chip">Feature Engineering</span>
+            <span class="chip">Model Validation</span>
+            <span class="chip">Visual Analytics</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Languages</h3>
+          <div class="chips">
+            <span class="chip">Python</span>
+            <span class="chip">R</span>
+            <span class="chip">SQL</span>
+            <span class="chip">C++</span>
+            <span class="chip">Java</span>
+            <span class="chip">JavaScript (React/Node)</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Platforms &amp; Tooling</h3>
+          <div class="chips">
+            <span class="chip">Git</span>
+            <span class="chip">CI/CD (Jenkins)</span>
+            <span class="chip">Test Automation</span>
+            <span class="chip">Linux</span>
+            <span class="chip">DevOps</span>
+            <span class="chip">Agile / Scrum</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ▸ LOOKING FOR -->
+    <section>
+      <h2>What I'm Looking For</h2>
+      <p>
+        I gravitate toward roles where data infrastructure meets applied statistics —
+        systems that have to be fast, reliable, and correct all at once. I'm especially
+        drawn to domains where the stakes make rigor non-negotiable: defense, aerospace,
+        and scientific or research computing. If you're building real-time analytics, ML
+        infrastructure, or high-throughput data platforms in one of those spaces, I'd love
+        to connect.
+      </p>
     </section>
 
     <!-- ▸ PROJECTS -->
@@ -153,6 +142,11 @@
       </div> -->
 
       <!-- To add more, copy a whole .project block above and edit it. -->
+
+      <p class="placeholder-note">
+        Selected projects coming soon. In the meantime, see my
+        <a href="https://github.com/johnborton354" target="_blank" rel="noopener" style="text-decoration:underline;">GitHub</a>.
+      </p>
 
     </section>
 
