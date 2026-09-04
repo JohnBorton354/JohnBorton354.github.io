@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- ▸ CHANGE: your name in the browser tab -->
+  <title>John Borton — Portfolio</title>
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --muted: #5c5c5c;
+      --line: #e2e2e2;
+      --bg: #fbfbf9;
+      --accent: #2f5d50;
+      --maxw: 720px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Georgia", "Times New Roman", serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+    /* Header / intro */
+    header { padding: 88px 0 40px; }
+    h1 { font-size: 2.6rem; margin: 0 0 8px; letter-spacing: -0.5px; }
+    .tagline { font-size: 1.15rem; color: var(--muted); margin: 0 0 20px; }
+    .links a {
+      color: var(--accent);
+      text-decoration: none;
+      margin-right: 18px;
+      font-family: system-ui, sans-serif;
+      font-size: 0.95rem;
+    }
+    .links a:hover { text-decoration: underline; }
+
+    /* Sections */
+    section { padding: 32px 0; border-top: 1px solid var(--line); }
+    h2 {
+      font-family: system-ui, sans-serif;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      margin: 0 0 20px;
+    }
+    p { margin: 0 0 16px; }
+
+    /* Projects */
+    .project { margin-bottom: 40px; }
+    .project:last-child { margin-bottom: 0; }
+    .project img {
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .project h3 { margin: 0 0 4px; font-size: 1.25rem; }
+    .project .meta {
+      font-family: system-ui, sans-serif;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+    .project a {
+      color: var(--accent);
+      font-family: system-ui, sans-serif;
+      font-size: 0.9rem;
+    }
+
+    /* Resume button */
+    .btn {
+      display: inline-block;
+      font-family: system-ui, sans-serif;
+      font-size: 0.95rem;
+      color: #fff;
+      background: var(--accent);
+      padding: 10px 20px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+    .btn:hover { opacity: 0.9; }
+
+    footer {
+      padding: 40px 0 80px;
+      color: var(--muted);
+      font-family: system-ui, sans-serif;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- ▸ INTRO -->
+    <header>
+      <h1>John Borton</h1>
+      <p class="tagline">What you do — e.g. Data Scientist · Machine Learning</p>
+      <div class="links">
+        <a href="mailto:you@example.com">Email</a>
+        <a href="https://github.com/johnborton354">GitHub</a>
+        <a href="https://linkedin.com/in/john-borton-a83927179">LinkedIn</a>
+      </div>
+    </header>
+
+    <!-- ▸ ABOUT -->
+    <section>
+      <h2>About</h2>
+      <p>
+        A short paragraph about who you are, what you work on, and what you're
+        looking for. Two or three sentences is plenty. Keep it specific — mention
+        the tools, domains, or kinds of problems you care about.
+      </p>
+    </section>
+
+    <!-- ▸ RESUME -->
+    <section>
+      <h2>Resume</h2>
+      <p>Download my full resume as a PDF.</p>
+      <a class="btn" href="resume.pdf" target="_blank" rel="noopener">View Resume (PDF)</a>
+    </section>
+
+    <!-- ▸ PROJECTS -->
+    <section>
+      <h2>Projects</h2>
+
+      <!-- Project 1 -->
+      <div class="project">
+        <img src="images/project1.png" alt="Screenshot of Project One">
+        <h3>Project One</h3>
+        <p class="meta">Python · scikit-learn · 2025</p>
+        <p>
+          One or two sentences on what it does, the approach you took, and the
+          result. Lead with the outcome or the interesting technical choice.
+        </p>
+        <a href="https://github.com/johnborton354/project1" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project">
+        <img src="images/project2.png" alt="Screenshot of Project Two">
+        <h3>Project Two</h3>
+        <p class="meta">Pandas · PCA · Clustering</p>
+        <p>
+          Another short description. Swap the image, title, meta line, and link.
+        </p>
+        <a href="https://github.com/johnborton354/project2" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+
+      <!-- To add more, copy a whole .project block above and edit it. -->
+
+    </section>
+
+    <footer>
+      © 2026 John Borton
+    </footer>
+
+  </div>
+</body>
+</html>
