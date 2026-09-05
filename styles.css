@@ -117,6 +117,35 @@ h2::before { content: "// "; color: var(--accent); }
 p { margin: 0 0 16px; color: var(--ink); }
 section > p:last-child { margin-bottom: 0; }
 
+/* Looking-for roles */
+.roles {
+  list-style: none;
+  margin: 4px 0 24px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.roles li { position: relative; padding-left: 24px; }
+.roles li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  top: 1px;
+  color: var(--accent);
+  font-family: var(--mono);
+  font-weight: 700;
+}
+.roles h3 {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: var(--accent);
+  margin: 0 0 6px;
+}
+.roles p { margin: 0; color: var(--muted); }
+
 /* Skill chips */
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 .chip {
@@ -144,6 +173,16 @@ section > p:last-child { margin-bottom: 0; }
   margin: 0 0 10px;
 }
 .skill-group .chips { margin-top: 0; }
+@media (min-width: 641px) {
+  .skills-grid > .skill-group:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .skills-grid > .skill-group:last-child:nth-child(odd) .chips { justify-content: center; }
+}
 
 /* Buttons */
 .btn {
@@ -208,7 +247,6 @@ footer {
   header { flex-direction: column; text-align: center; padding-top: 64px; }
   .header-text { width: 100%; }
   .avatar { width: 132px; height: 132px; }
-  .kicker .dot { display: block; margin: 2px 0; }
   .links { justify-content: center; }
   .links a { padding: 10px 16px; }
   .tagline { max-width: none; }
