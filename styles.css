@@ -454,12 +454,12 @@ footer {
   .tagline { max-width: none; }
   .chips { justify-content: center; }
   .skill-row { grid-template-columns: 1fr; gap: 28px; }
-  /* Two columns: a narrower stage column (so there's room to spare) and a
-     second column reserved for the skip badge, spanned vertically to sit
-     beside steps 4-6 specifically rather than trailing the whole list. */
+  /* Two columns: a skinny left column for the streaming icon (spanning
+     rows 7-11, beside steps 4-6) and a wide right column for the numbered
+     stages. */
   .pipeline {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 104px;
+    grid-template-columns: 52px minmax(0, 1fr);
     column-gap: 10px;
     row-gap: 10px;
   }
@@ -474,19 +474,20 @@ footer {
      a content-based floor) */
   .pipeline-stage { flex: initial; min-width: 0; }
   .pipeline-toggle { min-width: 0; }
-  .pipeline-stage[data-pd="0"] { grid-row: 1; grid-column: 1; }
-  .pipeline-arrow:nth-of-type(1) { grid-row: 2; grid-column: 1; }
-  .pipeline-stage[data-pd="1"] { grid-row: 3; grid-column: 1; }
-  .pipeline-arrow:nth-of-type(2) { grid-row: 4; grid-column: 1; }
-  .pipeline-stage[data-pd="2"] { grid-row: 5; grid-column: 1; }
-  .pipeline-arrow:nth-of-type(3) { grid-row: 6; grid-column: 1; }
-  .pipeline-stage[data-pd="3"] { grid-row: 7; grid-column: 1; }
-  .pipeline-arrow:nth-of-type(4) { grid-row: 8; grid-column: 1; }
-  .pipeline-stage[data-pd="4"] { grid-row: 9; grid-column: 1; }
-  .pipeline-arrow:nth-of-type(5) { grid-row: 10; grid-column: 1; }
-  .pipeline-stage[data-pd="5"] { grid-row: 11; grid-column: 1; }
+  .pipeline-stage[data-pd="0"] { grid-row: 1; grid-column: 2; }
+  .pipeline-arrow:nth-of-type(1) { grid-row: 2; grid-column: 2; }
+  .pipeline-stage[data-pd="1"] { grid-row: 3; grid-column: 2; }
+  .pipeline-arrow:nth-of-type(2) { grid-row: 4; grid-column: 2; }
+  .pipeline-stage[data-pd="2"] { grid-row: 5; grid-column: 2; }
+  .pipeline-arrow:nth-of-type(3) { grid-row: 6; grid-column: 2; }
+  .pipeline-stage[data-pd="3"] { grid-row: 7; grid-column: 2; }
+  .pipeline-arrow:nth-of-type(4) { grid-row: 8; grid-column: 2; }
+  .pipeline-stage[data-pd="4"] { grid-row: 9; grid-column: 2; }
+  .pipeline-arrow:nth-of-type(5) { grid-row: 10; grid-column: 2; }
+  .pipeline-stage[data-pd="5"] { grid-row: 11; grid-column: 2; }
   /* Reset the desktop bracket (absolute, spanning .pipeline-tail, open
-     bottom) back to a normal closed box placed in the grid's side column */
+     bottom) back to a normal closed box placed in the grid's skinny
+     left column, icon-only (no "Live Stream" text — there's no room) */
   .pipeline-stage-skip {
     position: static;
     left: auto;
@@ -497,7 +498,7 @@ footer {
   .pipeline-stage-skip::after { content: none; }
   .pipeline-stage[data-pd="6"] {
     grid-row: 7 / 12;
-    grid-column: 2;
+    grid-column: 1;
     align-self: stretch;
     width: auto;
   }
@@ -506,9 +507,26 @@ footer {
     height: 100%;
     justify-content: center;
     text-align: center;
-    padding: 10px 8px;
+    padding: 10px 4px;
     border-bottom-style: dashed;
     border-radius: 10px;
+  }
+  .pipeline-stage-skip .pipeline-label { display: none; }
+  /* Tap reveals to the right as a floating overlay instead of inline, so
+     it never pushes the stage list around */
+  .pipeline-stage-skip .pipeline-detail-wrap {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-left: 8px;
+    margin-top: 0;
+    width: 220px;
+    max-height: none;
+    overflow: visible;
+    z-index: 6;
+  }
+  .pipeline-stage-skip .pipeline-toggle[aria-expanded="true"] ~ .pipeline-detail-wrap {
+    margin-top: 0;
   }
   /* Larger, clearer color, and centered under/above the (now narrower)
      stage column instead of left-aligned with padding */
