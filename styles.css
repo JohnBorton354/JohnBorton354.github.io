@@ -489,9 +489,9 @@ footer {
     color: var(--accent);
     --arrow-angle: 90deg;
   }
-  /* Live Stream: now that the centered, thinner stages leave real margin
-     on both sides, this uses that space as a proper dashed box (matching
-     the numbered stages' shape) instead of a bare skinny line. */
+  /* Live Stream: a dotted line running down the left margin from step 4's
+     level to step 6's, ending in an arrow into 6 — not a boxed stage, since
+     it's a shortcut past 5 rather than a step of its own. */
   .pipeline-stage-skip {
     position: absolute;
     top: 4px;
@@ -501,6 +501,14 @@ footer {
     width: 78px;
     margin: 0;
   }
+  .pipeline-stage-skip::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    bottom: 12px;
+    left: 3px;
+    border-left: 2px dotted var(--accent-2);
+  }
   .pipeline-stage-skip .pipeline-toggle {
     width: 100%;
     height: 100%;
@@ -508,18 +516,18 @@ footer {
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 6px;
+    padding: 6px 4px 6px 12px;
     background: transparent;
-    border: 1px dashed var(--accent-2);
-    border-radius: 10px;
+    border: none;
   }
+  /* Anchored to the bottom of the strip (step 6's level) — not 50%, which
+     lands on step 5 and was mistaken for pointing at the wrong step. */
   .pipeline-stage-skip::after {
     content: "→";
     position: absolute;
-    left: auto;
-    right: -14px;
-    bottom: 50%;
-    transform: translateY(50%);
+    left: 0;
+    right: auto;
+    bottom: 2px;
     font-family: var(--mono);
     font-size: 1rem;
     line-height: 1;
@@ -544,15 +552,18 @@ footer {
    around — now that the centered/thinner stages leave real margin to
    open into (no longer needs the viewport-edge-fixed fallback). */
 @media (hover: none), (max-width: 640px) {
+  /* Viewport-fixed (not box-relative) so it can stretch all the way to the
+     screen edge with just a slim padding — script.js sets top/left per box
+     on open since a fixed element needs an explicit position to open at. */
   .pipeline-detail-wrap {
-    position: absolute;
+    position: fixed;
     top: 0;
-    left: 100%;
-    right: auto;
-    margin-left: 8px;
+    left: 0;
+    right: 14px;
+    margin-left: 0;
     opacity: 0;
     transform: none;
-    width: 82px;
+    width: auto;
     pointer-events: none;
     transition: opacity 0.2s ease;
     z-index: 6;
