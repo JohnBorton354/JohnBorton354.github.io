@@ -18,6 +18,37 @@ html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+/* Scroll-in reveal (progressive enhancement, added via script.js) */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px) scale(0.98);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+/* Opacity-only variant for elements that already animate transform on
+   hover (e.g. .roles li) — keeps the entrance fade from fighting the
+   hover transition since they'd otherwise share the transform property */
+.reveal-fade { opacity: 0; transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal-fade.visible { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal-fade { opacity: 1; transition: none; }
+}
+/* Stagger: entrance delay increases left-to-right / top-to-bottom.
+   Indices are +1 because .pipeline-skip (also a <div>) is the first
+   sibling, so it occupies :nth-of-type(1) among the div children. */
+.pipeline-stage:nth-of-type(2) { transition-delay: 0s; }
+.pipeline-stage:nth-of-type(3) { transition-delay: 0.07s; }
+.pipeline-stage:nth-of-type(4) { transition-delay: 0.14s; }
+.pipeline-stage:nth-of-type(5) { transition-delay: 0.21s; }
+.pipeline-stage:nth-of-type(6) { transition-delay: 0.28s; }
+.pipeline-stage:nth-of-type(7) { transition-delay: 0.35s; }
+.roles li:nth-child(1) { transition-delay: 0s; }
+.roles li:nth-child(2) { transition-delay: 0.1s; }
+.roles li:nth-child(3) { transition-delay: 0.2s; }
 body {
   margin: 0;
   font-family: var(--sans);
@@ -126,7 +157,12 @@ section > p:last-child { margin-bottom: 0; }
   flex-direction: column;
   gap: 20px;
 }
-.roles li { position: relative; padding-left: 24px; }
+.roles li {
+  position: relative;
+  padding-left: 24px;
+  transition: transform 0.15s ease;
+}
+.roles li:hover { transform: translateX(10px); }
 .roles li::before {
   content: "→";
   position: absolute;
@@ -135,7 +171,9 @@ section > p:last-child { margin-bottom: 0; }
   color: var(--accent);
   font-family: var(--mono);
   font-weight: 700;
+  transition: color 0.15s ease;
 }
+.roles li:hover::before { color: var(--accent-2); }
 .roles h3 {
   font-family: var(--mono);
   font-size: 0.85rem;
@@ -149,6 +187,7 @@ section > p:last-child { margin-bottom: 0; }
 /* Skill chips */
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 .chip {
+  display: inline-block;
   font-family: var(--mono);
   font-size: 0.75rem;
   color: var(--muted);
@@ -156,32 +195,151 @@ section > p:last-child { margin-bottom: 0; }
   background: var(--surface);
   padding: 6px 12px;
   border-radius: 999px;
+  transition: transform 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.chip:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  color: var(--ink);
 }
 
 /* Key skills */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 28px 32px;
-}
+.skills-grid { display: flex; flex-direction: column; gap: 28px; }
+.skill-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px 32px; }
+.skill-row-single { justify-items: center; text-align: center; }
+.skill-row-single .chips { justify-content: center; }
 .skill-group h3 {
+  margin: 0 0 10px;
   font-family: var(--mono);
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 1px;
   color: var(--accent);
-  margin: 0 0 10px;
 }
 .skill-group .chips { margin-top: 0; }
-@media (min-width: 641px) {
-  .skills-grid > .skill-group:last-child:nth-child(odd) {
-    grid-column: 1 / -1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  .skills-grid > .skill-group:last-child:nth-child(odd) .chips { justify-content: center; }
+
+/* Testing pipeline */
+.pipeline {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
+  row-gap: 12px;
+  column-gap: 6px;
+  margin-top: 20px;
+}
+.pipeline-stage, .pipeline-arrow { grid-row: 2; min-width: 0; }
+.pipeline-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 8px;
+  cursor: help;
+  text-align: left;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.pipeline-stage:hover .pipeline-toggle,
+.pipeline-stage:focus-within .pipeline-toggle,
+.pipeline-stage:focus .pipeline-toggle {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.pipeline-index {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  letter-spacing: 1px;
+}
+.pipeline-label {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.pipeline-arrow {
+  color: var(--muted-dim);
+  font-family: var(--mono);
+  font-size: 1.1rem;
+  align-self: center;
+  justify-self: center;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .pipeline-arrow { animation: pipelineFlow 2.2s ease-in-out infinite; }
+  .pipeline-arrow:nth-of-type(2) { animation-delay: 0.25s; }
+  .pipeline-arrow:nth-of-type(3) { animation-delay: 0.5s; }
+  .pipeline-arrow:nth-of-type(4) { animation-delay: 0.75s; }
+  .pipeline-arrow:nth-of-type(5) { animation-delay: 1s; }
+}
+@keyframes pipelineFlow {
+  0%, 100% { opacity: 0.35; transform: translateX(0); }
+  50% { opacity: 1; transform: translateX(3px); }
+}
+/* Positioned as a floating overlay (not in normal flow) so revealing it
+   on hover never changes a stage's height or pushes other content around */
+.pipeline-stage { position: relative; }
+.pipeline-detail-wrap {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 5;
+}
+.pipeline-stage:hover .pipeline-detail-wrap,
+.pipeline-stage:focus-within .pipeline-detail-wrap,
+.pipeline-stage:focus .pipeline-detail-wrap {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.pipeline-detail {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+/* Drawn as a bracket (top + side borders, no bottom/box) that drops down
+   at step 4, runs across skipping step 5, and arrows down into step 6 */
+.pipeline-skip {
+  grid-row: 1;
+  grid-column: 7 / 12;
+  position: relative;
+  z-index: 2;
+  align-self: end;
+  margin: 0 10px 10px;
+  padding: 4px 8px 22px;
+  border-top: 1px dashed var(--accent-2);
+  border-left: 1px dashed var(--accent-2);
+  border-right: 1px dashed var(--accent-2);
+  border-radius: 8px 8px 0 0;
+}
+.pipeline-skip::after {
+  content: "↓";
+  position: absolute;
+  right: 0;
+  bottom: -17px;
+  transform: translateX(50%);
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  line-height: 1;
+  color: var(--accent-2);
+}
+.pipeline-skip-label {
+  display: block;
+  margin: 0;
+  text-align: center;
+  font-size: 0.72rem;
+  font-style: italic;
+  color: var(--muted);
 }
 
 /* Buttons */
@@ -251,5 +409,20 @@ footer {
   .links a { padding: 10px 16px; }
   .tagline { max-width: none; }
   .chips { justify-content: center; }
-  .skills-grid { grid-template-columns: 1fr; }
+  .skill-row { grid-template-columns: 1fr; gap: 28px; }
+  .pipeline { grid-template-columns: 1fr; row-gap: 10px; }
+  .pipeline-stage, .pipeline-arrow { grid-row: auto; grid-column: 1; }
+  .pipeline-arrow { justify-self: start; padding-left: 18px; transform: rotate(90deg); }
+  .pipeline-skip { grid-row: auto; grid-column: 1; margin: 0 0 10px; }
+}
+/* Touch devices can't reliably hover, so the detail text would otherwise be
+   unreachable — show it inline and always-on instead of as a hover overlay */
+@media (hover: none), (max-width: 640px) {
+  .pipeline-detail-wrap {
+    position: static;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    margin-top: 8px;
+  }
 }

@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#090c12">
   <meta name="color-scheme" content="dark">
   <title>John Borton — Senior Test Automation Engineer</title>
-  <meta name="description" content="John Borton — Senior test automation engineer specializing in blackbox testing, automated system validation, and data-driven analysis pipelines, with growing interest in data engineering and machine learning.">
+  <meta name="description" content="John Borton — Senior test automation engineer specializing in automating operator inputs and system environments, data-driven validation, and analysis pipelines, with growing interest in data engineering and machine learning.">
 
   <!-- Favicon: SVG for modern browsers, PNG fallback, PNG for iOS home screen -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0e14'/%3E%3Ctext x='50' y='68' font-family='monospace' font-size='50' font-weight='700' fill='%2322d3ee' text-anchor='middle'%3EJB%3C/text%3E%3C/svg%3E">
@@ -17,14 +17,14 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="John Borton">
   <meta property="og:title" content="John Borton — Senior Test Automation Engineer">
-  <meta property="og:description" content="Blackbox testing, automated validation, and data-driven analysis pipelines — with growing interest in data engineering and machine learning.">
+  <meta property="og:description" content="Automating operator inputs and system environments, with data-driven validation and analysis pipelines — growing interest in data engineering and machine learning.">
   <meta property="og:url" content="https://johnborton354.github.io/">
   <meta property="og:image" content="https://johnborton354.github.io/images/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="John Borton — Senior Test Automation Engineer">
-  <meta name="twitter:description" content="Blackbox testing, automated validation, and data-driven analysis pipelines — with growing interest in data engineering and machine learning.">
+  <meta name="twitter:description" content="Automating operator inputs and system environments, with data-driven validation and analysis pipelines — growing interest in data engineering and machine learning.">
   <meta name="twitter:image" content="https://johnborton354.github.io/images/og-image.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,8 +45,7 @@
         <span class="kicker">Senior Test Automation Engineer</span>
         <h1>John Borton</h1>
         <p class="tagline">
-          Blackbox testing and validation of complex systems, with a background
-          spanning defense engineering and physics.
+           I build automation that simulates operators and environments, captures system data at scale, and runs statistical analysis pipelines, turning every test into concrete evidence that stakeholders and developers use to validate systems and make key decisions.
         </p>
         <div class="links">
           <a href="mailto:johnchapmanborton@gmail.com">Email</a>
@@ -60,71 +59,140 @@
     <section>
       <h2>About</h2>
       <p>
-        I'm a senior systems and software test automation engineer with a dual
-        CS/Statistics background, currently pursuing a master's in data analytics
-        at Georgia Tech. My work centers on designing automation architecture and
-        blackbox testing complex systems: I drive them with automated inputs,
-        collect the resulting system data, and run job-queued analysis pipelines
-        to validate behavior in a defense engineering environment, where a
-        physics minor sharpened my focus on measurement. I also mentor other
-        engineers on automation practices and architecture, and I'm confident in
-        this work and enjoy its breadth. Beyond that, I'm growing increasingly
-        interested in applying that same rigor to data engineering, machine
-        learning, and data science.
+      I'm a senior systems and software test automation engineer in defense, with a dual background in CS and Statistics and a physics minor that taught me to care about measurement. I design automation architectures that simulate operator inputs and the external environment, capture the resulting system data, and run queued analysis pipelines to verify that complex systems behave as intended. I also mentor engineers on automation practices and design.
+
+      I'm now pursuing an MS in Analytics at Georgia Tech, and I'm bringing the same rigor to data engineering, machine learning, and data science.
       </p>
+    </section>
+
+    <!-- ▸ TESTING PIPELINE -->
+    <section>
+      <h2>Testing Pipeline</h2>
+      <p>A simplified look at how I validate a system end to end:</p>
+      <div class="pipeline">
+        <div class="pipeline-skip" tabindex="0">
+          <span class="pipeline-skip-label">When live results matter or time is limited, system data can stream directly to the dashboard, skipping job-queued analysis.</span>
+        </div>
+        <div class="pipeline-stage" tabindex="0">
+          <div class="pipeline-toggle" aria-describedby="stage-0-detail">
+            <span class="pipeline-index">01</span>
+            <span class="pipeline-label">Scheduling</span>
+          </div>
+          <div class="pipeline-detail-wrap">
+            <p class="pipeline-detail" id="stage-0-detail">Trigger and schedule test runs automatically, via CI/CD or job queues, with no manual kickoff.</p>
+          </div>
+        </div>
+        <span class="pipeline-arrow" aria-hidden="true">→</span>
+        <div class="pipeline-stage" tabindex="0">
+          <div class="pipeline-toggle" aria-describedby="stage-1-detail">
+            <span class="pipeline-index">02</span>
+            <span class="pipeline-label">Operator &amp; Environment Inputs</span>
+          </div>
+          <div class="pipeline-detail-wrap">
+            <p class="pipeline-detail" id="stage-1-detail">Automate operator inputs and the external environment with scripted, repeatable scenarios.</p>
+          </div>
+        </div>
+        <span class="pipeline-arrow" aria-hidden="true">→</span>
+        <div class="pipeline-stage" tabindex="0">
+          <div class="pipeline-toggle" aria-describedby="stage-2-detail">
+            <span class="pipeline-index">03</span>
+            <span class="pipeline-label">System Under Test</span>
+          </div>
+          <div class="pipeline-detail-wrap">
+            <p class="pipeline-detail" id="stage-2-detail">The system itself: its behavior is driven entirely by the automated inputs and environment around it.</p>
+          </div>
+        </div>
+        <span class="pipeline-arrow" aria-hidden="true">→</span>
+        <div class="pipeline-stage" tabindex="0">
+          <div class="pipeline-toggle" aria-describedby="stage-3-detail">
+            <span class="pipeline-index">04</span>
+            <span class="pipeline-label">Data Collection</span>
+          </div>
+          <div class="pipeline-detail-wrap">
+            <p class="pipeline-detail" id="stage-3-detail">Capture the system data generated during each test run.</p>
+          </div>
+        </div>
+        <span class="pipeline-arrow" aria-hidden="true">→</span>
+        <div class="pipeline-stage" tabindex="0">
+          <div class="pipeline-toggle" aria-describedby="stage-4-detail">
+            <span class="pipeline-index">05</span>
+            <span class="pipeline-label">Job-Queued Analysis</span>
+          </div>
+          <div class="pipeline-detail-wrap">
+            <p class="pipeline-detail" id="stage-4-detail">Queue the collected data through automated pipelines to validate behavior at scale.</p>
+          </div>
+        </div>
+        <span class="pipeline-arrow" aria-hidden="true">→</span>
+        <div class="pipeline-stage" tabindex="0">
+          <div class="pipeline-toggle" aria-describedby="stage-5-detail">
+            <span class="pipeline-index">06</span>
+            <span class="pipeline-label">Presentation / Dashboard</span>
+          </div>
+          <div class="pipeline-detail-wrap">
+            <p class="pipeline-detail" id="stage-5-detail">Validate results against requirements and present them in a dashboard built for stakeholders and reviews.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- ▸ KEY SKILLS -->
     <section>
       <h2>Key Skills</h2>
       <div class="skills-grid">
-        <div class="skill-group">
-          <h3>Data Engineering</h3>
-          <div class="chips">
-            <span class="chip">ETL / ELT Pipeline Design</span>
-            <span class="chip">Data Wrangling &amp; Cleaning</span>
-            <span class="chip">Relational DB Design</span>
-            <span class="chip">High-Volume Ingestion</span>
-            <span class="chip">Real-Time Stream Analysis</span>
+        <div class="skill-row">
+          <div class="skill-group">
+            <h3>Software Engineering</h3>
+            <div class="chips">
+              <span class="chip">Bash Scripting</span>
+              <span class="chip">C++ (Boost Libraries)</span>
+              <span class="chip">Docker</span>
+              <span class="chip">Kubernetes</span>
+              <span class="chip">AI-Assisted Development</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3>Platforms &amp; Tooling</h3>
+            <div class="chips">
+              <span class="chip">Test Automation</span>
+              <span class="chip">Squish (Qt Automation)</span>
+              <span class="chip">CI/CD (Jenkins)</span>
+              <span class="chip">DevOps</span>
+              <span class="chip">Git</span>
+              <span class="chip">Linux</span>
+              <span class="chip">Agile / Scrum</span>
+            </div>
           </div>
         </div>
-        <div class="skill-group">
-          <h3>ML &amp; Statistics</h3>
-          <div class="chips">
-            <span class="chip">High-Dimensional Regression</span>
-            <span class="chip">Statistical Inference</span>
-            <span class="chip">Monte Carlo Simulations</span>
-            <span class="chip">Feature Engineering</span>
-            <span class="chip">GPU Acceleration (Pytorch/CUDA)</span>
+        <div class="skill-row">
+          <div class="skill-group">
+            <h3>ML &amp; Statistics</h3>
+            <div class="chips">
+              <span class="chip">High-Dimensional Regression</span>
+              <span class="chip">Statistical Inference</span>
+              <span class="chip">Monte Carlo Simulations</span>
+              <span class="chip">Feature Engineering</span>
+              <span class="chip">GPU Acceleration (Pytorch/CUDA)</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3>Data Engineering</h3>
+            <div class="chips">
+              <span class="chip">ETL / ELT Pipeline Design</span>
+              <span class="chip">Data Wrangling &amp; Cleaning</span>
+              <span class="chip">Relational DB Design</span>
+              <span class="chip">High-Volume Ingestion</span>
+              <span class="chip">Real-Time Stream Analysis</span>
+            </div>
           </div>
         </div>
-        <div class="skill-group">
-          <h3>Software Engineering</h3>
-          <div class="chips">
-            <span class="chip">Bash Scripting</span>
-            <span class="chip">C++ (Boost Libraries)</span>
-            <span class="chip">Docker</span>
-            <span class="chip">Kubernetes</span>
-            <span class="chip">AI-Assisted Development</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <h3>Frontend Design</h3>
-          <div class="chips">
-            <span class="chip">JavaScript (React/Node)</span>
-            <span class="chip">Qt (Python)</span>
-            <span class="chip">Squish (Qt Automation)</span>
-            <span class="chip">PowerBI (DAX)</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <h3>Platforms &amp; Tooling</h3>
-          <div class="chips">
-            <span class="chip">Git</span>
-            <span class="chip">CI/CD (Jenkins)</span>
-            <span class="chip">Linux</span>
-            <span class="chip">DevOps</span>
-            <span class="chip">Agile / Scrum</span>
+        <div class="skill-row skill-row-single">
+          <div class="skill-group">
+            <h3>Frontend Design</h3>
+            <div class="chips">
+              <span class="chip">JavaScript (React/Node)</span>
+              <span class="chip">Qt (Python)</span>
+              <span class="chip">PowerBI (DAX)</span>
+            </div>
           </div>
         </div>
       </div>
@@ -138,15 +206,9 @@
         <li>
           <h3>Test Automation</h3>
           <p>
-            Blackbox testing via automated inputs, system data collection, and
-            job-queued result analysis. It's what I do now, and I enjoy its breadth.
-          </p>
-        </li>
-        <li>
-          <h3>Data Engineering</h3>
-          <p>
-            Data pipelines and scale, which I find compelling from a systems-design
-            perspective: building the infrastructure data actually moves through.
+            Automating operator inputs and the external environment, with system
+            data collection and job-queued result analysis. It's what I do now,
+            and I enjoy its breadth.
           </p>
         </li>
         <li>
@@ -155,6 +217,13 @@
             More analytical: understanding data and drawing meaningful conclusions
             from it through advanced math models like deep learning, transformers,
             and PCA.
+          </p>
+        </li>
+        <li>
+          <h3>Data Engineering</h3>
+          <p>
+            Data pipelines and scale, which I find compelling from a systems-design
+            perspective: building the infrastructure data actually moves through.
           </p>
         </li>
       </ul>
@@ -206,5 +275,6 @@
     </footer>
 
   </div>
+  <script src="script.js" defer></script>
 </body>
 </html>
