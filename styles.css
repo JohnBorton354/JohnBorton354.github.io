@@ -207,8 +207,7 @@ section > p:last-child { margin-bottom: 0; }
 /* Key skills */
 .skills-grid { display: flex; flex-direction: column; gap: 28px; }
 .skill-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px 32px; }
-.skill-row-single { grid-template-columns: 1fr; justify-items: center; text-align: center; }
-.skill-row-single .chips { justify-content: center; }
+.skill-row-single { grid-template-columns: 1fr; justify-items: center; }
 .skill-group h3 {
   margin: 0 0 10px;
   font-family: var(--mono);
@@ -216,8 +215,9 @@ section > p:last-child { margin-bottom: 0; }
   font-weight: 600;
   letter-spacing: 1px;
   color: var(--accent);
+  text-align: center;
 }
-.skill-group .chips { margin-top: 0; }
+.skill-group .chips { margin-top: 0; justify-content: center; }
 
 /* Testing pipeline */
 .pipeline {
@@ -481,7 +481,7 @@ footer {
   /* width:100% + max-width (not a % width) avoids the shrink-to-fit trap:
      align-items:center on the flex-column parents sizes children to
      content unless they're given an explicit width to fill and cap */
-  .pipeline-stage { flex: initial; min-width: 0; width: 100%; max-width: 260px; }
+  .pipeline-stage { flex: initial; min-width: 0; width: 100%; max-width: 150px; }
   .pipeline-toggle { min-width: 0; }
   .pipeline-arrow {
     padding-left: 0;
