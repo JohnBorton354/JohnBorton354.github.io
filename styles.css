@@ -236,13 +236,13 @@ section > p:last-child { margin-bottom: 0; }
   border: 1px solid var(--line);
   border-radius: 10px;
   padding: 10px 8px;
-  cursor: help;
+  cursor: pointer;
   text-align: left;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 .pipeline-stage:hover .pipeline-toggle,
-.pipeline-stage:focus-within .pipeline-toggle,
-.pipeline-stage:focus .pipeline-toggle {
+.pipeline-toggle:focus-visible,
+.pipeline-toggle[aria-expanded="true"] {
   border-color: var(--accent);
   background: var(--accent-soft);
 }
@@ -296,8 +296,7 @@ section > p:last-child { margin-bottom: 0; }
   z-index: 5;
 }
 .pipeline-stage:hover .pipeline-detail-wrap,
-.pipeline-stage:focus-within .pipeline-detail-wrap,
-.pipeline-stage:focus .pipeline-detail-wrap {
+.pipeline-toggle[aria-expanded="true"] ~ .pipeline-detail-wrap {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
@@ -413,15 +412,35 @@ footer {
   .pipeline { grid-template-columns: 1fr; row-gap: 10px; }
   .pipeline-stage, .pipeline-arrow { grid-row: auto; grid-column: 1; }
   .pipeline-arrow { justify-self: start; padding-left: 18px; transform: rotate(90deg); }
-  .pipeline-skip { grid-row: auto; grid-column: 1; margin: 0 0 10px; }
+  /* The left/right bracket "legs" only make sense spanning across a
+     horizontal row; stacked vertically it reads better as a closed box */
+  .pipeline-skip {
+    grid-row: auto;
+    grid-column: 1;
+    margin: 0 0 10px;
+    border-bottom: 1px dashed var(--accent-2);
+    border-radius: 8px;
+    padding-bottom: 10px;
+  }
+  .pipeline-skip::after { bottom: -9px; }
 }
-/* Touch devices can't reliably hover, so the detail text would otherwise be
-   unreachable — show it inline and always-on instead of as a hover overlay */
+/* Touch devices can't reliably hover, so detail text is tap-to-reveal:
+   .pipeline-toggle sets aria-expanded via click/keydown (script.js), which
+   this rule reads to show/hide the (now inline, not overlaid) detail */
 @media (hover: none), (max-width: 640px) {
   .pipeline-detail-wrap {
     position: static;
-    opacity: 1;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    pointer-events: none;
     transform: none;
+    transition: opacity 0.2s ease, max-height 0.25s ease;
+    margin-top: 0;
+  }
+  .pipeline-toggle[aria-expanded="true"] ~ .pipeline-detail-wrap {
+    opacity: 1;
+    max-height: 240px;
     pointer-events: auto;
     margin-top: 8px;
   }
