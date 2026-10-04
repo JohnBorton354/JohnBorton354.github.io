@@ -9,7 +9,7 @@
   --accent: #2dd4e0;
   --accent-soft: rgba(45, 212, 224, 0.12);
   --accent-2: #f0b429;
-  --maxw: 780px;
+  --maxw: 960px;
   --mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
   --sans: "Inter", system-ui, -apple-system, sans-serif;
 }
@@ -207,7 +207,7 @@ section > p:last-child { margin-bottom: 0; }
 /* Key skills */
 .skills-grid { display: flex; flex-direction: column; gap: 28px; }
 .skill-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px 32px; }
-.skill-row-single { justify-items: center; text-align: center; }
+.skill-row-single { grid-template-columns: 1fr; justify-items: center; text-align: center; }
 .skill-row-single .chips { justify-content: center; }
 .skill-group h3 {
   margin: 0 0 10px;
@@ -222,12 +222,61 @@ section > p:last-child { margin-bottom: 0; }
 /* Testing pipeline */
 .pipeline {
   display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+.pipeline-row {
+  display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   gap: 6px;
-  margin-top: 20px;
 }
-.pipeline-stage { position: relative; flex: 1 1 85px; min-width: 76px; }
+.pipeline-stage { position: relative; flex: 1 1 130px; min-width: 76px; }
+/* Long single words (e.g. "Presentation") can be wider than a narrow box;
+   without this they overflow horizontally into the next box instead of
+   breaking, which read as overlapping boxes */
+.pipeline-label { overflow-wrap: anywhere; }
+/* Wraps steps 4-6 so the skip connector can be positioned (and sized)
+   relative to exactly this subgroup, instead of the whole row */
+.pipeline-tail {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  position: relative;
+  flex: 3 1 420px;
+  min-width: 0;
+}
+/* Desktop: a bracket (dashed top/left/right, no bottom) spanning the full
+   width of .pipeline-tail — i.e. exactly steps 4 through 6 — with a single
+   arrow closing into step 6. Mobile overrides this back to a normal boxed
+   stage sitting beside steps 4-6 (see max-width:640px below). */
+.pipeline-stage-skip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  margin-bottom: 14px;
+}
+.pipeline-stage-skip::after {
+  content: "↓";
+  position: absolute;
+  right: 10px;
+  bottom: -2px;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  line-height: 1;
+  color: var(--accent-2);
+}
+.pipeline-stage-skip .pipeline-toggle {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 8px 8px 0 0;
+  background: transparent;
+  padding: 8px 16px 18px;
+}
 .pipeline-toggle {
   display: flex;
   flex-direction: column;
@@ -241,11 +290,20 @@ section > p:last-child { margin-bottom: 0; }
   text-align: left;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
-.pipeline-stage:hover .pipeline-toggle,
 .pipeline-toggle:focus-visible,
 .pipeline-toggle[aria-expanded="true"] {
   border-color: var(--accent);
   background: var(--accent-soft);
+}
+/* :hover gated to devices that actually have a hover-capable pointer.
+   Touch "supports" :hover by faking it on tap, but never un-applies it
+   until a different element is tapped — which made closing a box on
+   phone appear to require tapping something else first. */
+@media (hover: hover) {
+  .pipeline-stage:hover .pipeline-toggle {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
 }
 .pipeline-index {
   font-family: var(--mono);
@@ -262,9 +320,14 @@ section > p:last-child { margin-bottom: 0; }
 /* Optional/alternate path, not a sequential numbered step: dashed border
    and an amber accent distinguish it from the main six stages */
 .pipeline-stage-skip .pipeline-toggle { border-style: dashed; border-color: var(--accent-2); }
+/* Desktop bracket shape: open on the bottom (overrides the dashed-all-sides
+   rule above via source order, not !important — this comes after it) */
+.pipeline-stage-skip .pipeline-toggle { border-bottom: none; }
 .pipeline-stage-skip .pipeline-index { color: var(--accent-2); }
-.pipeline-stage-skip .pipeline-toggle:hover,
 .pipeline-stage-skip .pipeline-toggle[aria-expanded="true"] { background: rgba(240, 180, 41, 0.1); }
+@media (hover: hover) {
+  .pipeline-stage-skip .pipeline-toggle:hover { background: rgba(240, 180, 41, 0.1); }
+}
 /* rotate(var(--arrow-angle)) is included directly in the keyframes below so
    the flow animation and the mobile down-rotation don't fight over the
    transform property (an animation's transform fully replaces a static one) */
@@ -305,11 +368,17 @@ section > p:last-child { margin-bottom: 0; }
   transition: opacity 0.2s ease, transform 0.2s ease;
   z-index: 5;
 }
-.pipeline-stage:hover .pipeline-detail-wrap,
 .pipeline-toggle[aria-expanded="true"] ~ .pipeline-detail-wrap {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+}
+@media (hover: hover) {
+  .pipeline-stage:hover .pipeline-detail-wrap {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
 }
 .pipeline-detail {
   margin: 0;
@@ -385,8 +454,71 @@ footer {
   .tagline { max-width: none; }
   .chips { justify-content: center; }
   .skill-row { grid-template-columns: 1fr; gap: 28px; }
-  .pipeline { flex-direction: column; }
-  .pipeline-arrow { align-self: flex-start; padding-left: 18px; --arrow-angle: 90deg; }
+  /* Two columns: a narrower stage column (so there's room to spare) and a
+     second column reserved for the skip badge, spanned vertically to sit
+     beside steps 4-6 specifically rather than trailing the whole list. */
+  .pipeline {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 104px;
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+  /* Flattens both wrapper levels so their children act as direct grid
+     items of .pipeline again, letting the data-pd placement below work */
+  .pipeline-row { display: contents; }
+  .pipeline-tail { display: contents; }
+  /* min-width:0 has to be repeated on the toggle too — a grid item's own
+     min-width:0 doesn't stop ITS children (width:100% box) from carrying
+     their min-content size back up, which was blowing the column out past
+     the viewport (minmax(0,1fr) only works if nothing downstream re-imposes
+     a content-based floor) */
+  .pipeline-stage { flex: initial; min-width: 0; }
+  .pipeline-toggle { min-width: 0; }
+  .pipeline-stage[data-pd="0"] { grid-row: 1; grid-column: 1; }
+  .pipeline-arrow:nth-of-type(1) { grid-row: 2; grid-column: 1; }
+  .pipeline-stage[data-pd="1"] { grid-row: 3; grid-column: 1; }
+  .pipeline-arrow:nth-of-type(2) { grid-row: 4; grid-column: 1; }
+  .pipeline-stage[data-pd="2"] { grid-row: 5; grid-column: 1; }
+  .pipeline-arrow:nth-of-type(3) { grid-row: 6; grid-column: 1; }
+  .pipeline-stage[data-pd="3"] { grid-row: 7; grid-column: 1; }
+  .pipeline-arrow:nth-of-type(4) { grid-row: 8; grid-column: 1; }
+  .pipeline-stage[data-pd="4"] { grid-row: 9; grid-column: 1; }
+  .pipeline-arrow:nth-of-type(5) { grid-row: 10; grid-column: 1; }
+  .pipeline-stage[data-pd="5"] { grid-row: 11; grid-column: 1; }
+  /* Reset the desktop bracket (absolute, spanning .pipeline-tail, open
+     bottom) back to a normal closed box placed in the grid's side column */
+  .pipeline-stage-skip {
+    position: static;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    margin-bottom: 0;
+  }
+  .pipeline-stage-skip::after { content: none; }
+  .pipeline-stage[data-pd="6"] {
+    grid-row: 7 / 12;
+    grid-column: 2;
+    align-self: stretch;
+    width: auto;
+  }
+  .pipeline-stage-skip .pipeline-toggle {
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    text-align: center;
+    padding: 10px 8px;
+    border-bottom-style: dashed;
+    border-radius: 10px;
+  }
+  /* Larger, clearer color, and centered under/above the (now narrower)
+     stage column instead of left-aligned with padding */
+  .pipeline-arrow {
+    justify-self: center;
+    padding-left: 0;
+    font-size: 1.35rem;
+    color: var(--accent);
+    --arrow-angle: 90deg;
+  }
 }
 /* Touch devices can't reliably hover, so detail text is tap-to-reveal:
    .pipeline-toggle sets aria-expanded via click/keydown (script.js), which

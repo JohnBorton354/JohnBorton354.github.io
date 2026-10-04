@@ -70,6 +70,7 @@
       <h2>Testing Pipeline</h2>
       <p>A simplified look at how I validate a system end to end:</p>
       <div class="pipeline">
+        <div class="pipeline-row">
         <div class="pipeline-stage" data-pd="0">
           <div class="pipeline-toggle" role="button" tabindex="0" aria-expanded="false" aria-describedby="stage-0-detail">
             <span class="pipeline-index">01</span>
@@ -100,43 +101,46 @@
           </div>
         </div>
         <span class="pipeline-arrow" aria-hidden="true">→</span>
-        <div class="pipeline-stage" data-pd="3">
-          <div class="pipeline-toggle" role="button" tabindex="0" aria-expanded="false" aria-describedby="stage-3-detail">
-            <span class="pipeline-index">04</span>
-            <span class="pipeline-label">Data Collection</span>
+        <div class="pipeline-tail">
+          <div class="pipeline-stage pipeline-stage-skip" data-pd="6">
+            <div class="pipeline-toggle" role="button" tabindex="0" aria-expanded="false" aria-describedby="skip-detail">
+              <span class="pipeline-index">⇢</span>
+              <span class="pipeline-label">Live Stream</span>
+            </div>
+            <div class="pipeline-detail-wrap">
+              <p class="pipeline-detail" id="skip-detail">When live results matter or time is limited, system data from step 4 can stream directly to the dashboard in step 6, skipping job-queued analysis.</p>
+            </div>
           </div>
-          <div class="pipeline-detail-wrap">
-            <p class="pipeline-detail" id="stage-3-detail">Capture the system data generated during each test run.</p>
+          <div class="pipeline-stage" data-pd="3">
+            <div class="pipeline-toggle" role="button" tabindex="0" aria-expanded="false" aria-describedby="stage-3-detail">
+              <span class="pipeline-index">04</span>
+              <span class="pipeline-label">Data Collection</span>
+            </div>
+            <div class="pipeline-detail-wrap">
+              <p class="pipeline-detail" id="stage-3-detail">Capture the system data generated during each test run.</p>
+            </div>
+          </div>
+          <span class="pipeline-arrow" aria-hidden="true">→</span>
+          <div class="pipeline-stage" data-pd="4">
+            <div class="pipeline-toggle" role="button" tabindex="0" aria-expanded="false" aria-describedby="stage-4-detail">
+              <span class="pipeline-index">05</span>
+              <span class="pipeline-label">Job-Queued Analysis</span>
+            </div>
+            <div class="pipeline-detail-wrap">
+              <p class="pipeline-detail" id="stage-4-detail">Queue the collected data through automated pipelines to validate behavior at scale.</p>
+            </div>
+          </div>
+          <span class="pipeline-arrow" aria-hidden="true">→</span>
+          <div class="pipeline-stage" data-pd="5">
+            <div class="pipeline-toggle" role="button" tabindex="0" aria-expanded="false" aria-describedby="stage-5-detail">
+              <span class="pipeline-index">06</span>
+              <span class="pipeline-label">Presentation / Dashboard</span>
+            </div>
+            <div class="pipeline-detail-wrap">
+              <p class="pipeline-detail" id="stage-5-detail">Validate results against requirements and present them in a dashboard built for stakeholders and reviews.</p>
+            </div>
           </div>
         </div>
-        <span class="pipeline-arrow" aria-hidden="true">→</span>
-        <div class="pipeline-stage" data-pd="4">
-          <div class="pipeline-toggle" role="button" tabindex="0" aria-expanded="false" aria-describedby="stage-4-detail">
-            <span class="pipeline-index">05</span>
-            <span class="pipeline-label">Job-Queued Analysis</span>
-          </div>
-          <div class="pipeline-detail-wrap">
-            <p class="pipeline-detail" id="stage-4-detail">Queue the collected data through automated pipelines to validate behavior at scale.</p>
-          </div>
-        </div>
-        <span class="pipeline-arrow" aria-hidden="true">→</span>
-        <div class="pipeline-stage" data-pd="5">
-          <div class="pipeline-toggle" role="button" tabindex="0" aria-expanded="false" aria-describedby="stage-5-detail">
-            <span class="pipeline-index">06</span>
-            <span class="pipeline-label">Presentation / Dashboard</span>
-          </div>
-          <div class="pipeline-detail-wrap">
-            <p class="pipeline-detail" id="stage-5-detail">Validate results against requirements and present them in a dashboard built for stakeholders and reviews.</p>
-          </div>
-        </div>
-        <div class="pipeline-stage pipeline-stage-skip" data-pd="6">
-          <div class="pipeline-toggle" role="button" tabindex="0" aria-expanded="false" aria-describedby="skip-detail">
-            <span class="pipeline-index">⇢</span>
-            <span class="pipeline-label">Live Stream</span>
-          </div>
-          <div class="pipeline-detail-wrap">
-            <p class="pipeline-detail" id="skip-detail">When live results matter or time is limited, system data from step 4 can stream directly to the dashboard in step 6, skipping job-queued analysis.</p>
-          </div>
         </div>
       </div>
     </section>
