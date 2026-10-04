@@ -38,14 +38,15 @@ html { scroll-behavior: smooth; }
   .reveal-fade { opacity: 1; transition: none; }
 }
 /* Stagger: entrance delay increases left-to-right / top-to-bottom.
-   Indices are +1 because .pipeline-skip (also a <div>) is the first
-   sibling, so it occupies :nth-of-type(1) among the div children. */
-.pipeline-stage:nth-of-type(2) { transition-delay: 0s; }
-.pipeline-stage:nth-of-type(3) { transition-delay: 0.07s; }
-.pipeline-stage:nth-of-type(4) { transition-delay: 0.14s; }
-.pipeline-stage:nth-of-type(5) { transition-delay: 0.21s; }
-.pipeline-stage:nth-of-type(6) { transition-delay: 0.28s; }
-.pipeline-stage:nth-of-type(7) { transition-delay: 0.35s; }
+   Keyed by data-pd rather than :nth-of-type so it doesn't silently break
+   if the markup order or sibling mix changes. */
+.pipeline-stage[data-pd="0"] { transition-delay: 0s; }
+.pipeline-stage[data-pd="1"] { transition-delay: 0.07s; }
+.pipeline-stage[data-pd="2"] { transition-delay: 0.14s; }
+.pipeline-stage[data-pd="3"] { transition-delay: 0.21s; }
+.pipeline-stage[data-pd="4"] { transition-delay: 0.28s; }
+.pipeline-stage[data-pd="5"] { transition-delay: 0.35s; }
+.pipeline-stage[data-pd="6"] { transition-delay: 0.42s; }
 .roles li:nth-child(1) { transition-delay: 0s; }
 .roles li:nth-child(2) { transition-delay: 0.1s; }
 .roles li:nth-child(3) { transition-delay: 0.2s; }
@@ -220,13 +221,13 @@ section > p:last-child { margin-bottom: 0; }
 
 /* Testing pipeline */
 .pipeline {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
-  row-gap: 12px;
-  column-gap: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 6px;
   margin-top: 20px;
 }
-.pipeline-stage, .pipeline-arrow { grid-row: 2; min-width: 0; }
+.pipeline-stage { position: relative; flex: 1 1 85px; min-width: 76px; }
 .pipeline-toggle {
   display: flex;
   flex-direction: column;
@@ -258,12 +259,22 @@ section > p:last-child { margin-bottom: 0; }
   font-weight: 600;
   color: var(--ink);
 }
+/* Optional/alternate path, not a sequential numbered step: dashed border
+   and an amber accent distinguish it from the main six stages */
+.pipeline-stage-skip .pipeline-toggle { border-style: dashed; border-color: var(--accent-2); }
+.pipeline-stage-skip .pipeline-index { color: var(--accent-2); }
+.pipeline-stage-skip .pipeline-toggle:hover,
+.pipeline-stage-skip .pipeline-toggle[aria-expanded="true"] { background: rgba(240, 180, 41, 0.1); }
+/* rotate(var(--arrow-angle)) is included directly in the keyframes below so
+   the flow animation and the mobile down-rotation don't fight over the
+   transform property (an animation's transform fully replaces a static one) */
 .pipeline-arrow {
+  --arrow-angle: 0deg;
   color: var(--muted-dim);
   font-family: var(--mono);
   font-size: 1.1rem;
   align-self: center;
-  justify-self: center;
+  transform: rotate(var(--arrow-angle));
 }
 @media (prefers-reduced-motion: no-preference) {
   .pipeline-arrow { animation: pipelineFlow 2.2s ease-in-out infinite; }
@@ -273,12 +284,11 @@ section > p:last-child { margin-bottom: 0; }
   .pipeline-arrow:nth-of-type(5) { animation-delay: 1s; }
 }
 @keyframes pipelineFlow {
-  0%, 100% { opacity: 0.35; transform: translateX(0); }
-  50% { opacity: 1; transform: translateX(3px); }
+  0%, 100% { opacity: 0.35; transform: rotate(var(--arrow-angle)) translateX(0); }
+  50% { opacity: 1; transform: rotate(var(--arrow-angle)) translateX(3px); }
 }
 /* Positioned as a floating overlay (not in normal flow) so revealing it
    on hover never changes a stage's height or pushes other content around */
-.pipeline-stage { position: relative; }
 .pipeline-detail-wrap {
   position: absolute;
   top: 100%;
@@ -304,40 +314,6 @@ section > p:last-child { margin-bottom: 0; }
 .pipeline-detail {
   margin: 0;
   font-size: 0.82rem;
-  color: var(--muted);
-}
-/* Drawn as a bracket (top + side borders, no bottom/box) that drops down
-   at step 4, runs across skipping step 5, and arrows down into step 6 */
-.pipeline-skip {
-  grid-row: 1;
-  grid-column: 7 / 12;
-  position: relative;
-  z-index: 2;
-  align-self: end;
-  margin: 0 10px 10px;
-  padding: 4px 8px 22px;
-  border-top: 1px dashed var(--accent-2);
-  border-left: 1px dashed var(--accent-2);
-  border-right: 1px dashed var(--accent-2);
-  border-radius: 8px 8px 0 0;
-}
-.pipeline-skip::after {
-  content: "↓";
-  position: absolute;
-  right: 0;
-  bottom: -17px;
-  transform: translateX(50%);
-  font-family: var(--mono);
-  font-size: 0.95rem;
-  line-height: 1;
-  color: var(--accent-2);
-}
-.pipeline-skip-label {
-  display: block;
-  margin: 0;
-  text-align: center;
-  font-size: 0.72rem;
-  font-style: italic;
   color: var(--muted);
 }
 
@@ -409,20 +385,8 @@ footer {
   .tagline { max-width: none; }
   .chips { justify-content: center; }
   .skill-row { grid-template-columns: 1fr; gap: 28px; }
-  .pipeline { grid-template-columns: 1fr; row-gap: 10px; }
-  .pipeline-stage, .pipeline-arrow { grid-row: auto; grid-column: 1; }
-  .pipeline-arrow { justify-self: start; padding-left: 18px; transform: rotate(90deg); }
-  /* The left/right bracket "legs" only make sense spanning across a
-     horizontal row; stacked vertically it reads better as a closed box */
-  .pipeline-skip {
-    grid-row: auto;
-    grid-column: 1;
-    margin: 0 0 10px;
-    border-bottom: 1px dashed var(--accent-2);
-    border-radius: 8px;
-    padding-bottom: 10px;
-  }
-  .pipeline-skip::after { bottom: -9px; }
+  .pipeline { flex-direction: column; }
+  .pipeline-arrow { align-self: flex-start; padding-left: 18px; --arrow-angle: 90deg; }
 }
 /* Touch devices can't reliably hover, so detail text is tap-to-reveal:
    .pipeline-toggle sets aria-expanded via click/keydown (script.js), which
