@@ -440,10 +440,15 @@ section > p:last-child { margin-bottom: 0; }
 
 footer {
   padding: 40px 0 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   color: var(--muted-dim);
   font-family: var(--mono);
   font-size: 0.8rem;
 }
+/* Bumped on every change so deploys/caching can be verified at a glance */
+.version-tag { font-size: 0.72rem; opacity: 0.7; }
 
 @media (max-width: 640px) {
   header { flex-direction: column; text-align: center; padding-top: 64px; }
@@ -454,108 +459,120 @@ footer {
   .tagline { max-width: none; }
   .chips { justify-content: center; }
   .skill-row { grid-template-columns: 1fr; gap: 28px; }
-  /* Two columns: a skinny left column for the streaming icon (spanning
-     rows 7-11, beside steps 4-6) and a wide right column for the numbered
-     stages. */
-  .pipeline {
-    display: grid;
-    grid-template-columns: 52px minmax(0, 1fr);
-    column-gap: 10px;
-    row-gap: 10px;
-  }
-  /* Flattens both wrapper levels so their children act as direct grid
-     items of .pipeline again, letting the data-pd placement below work */
-  .pipeline-row { display: contents; }
-  .pipeline-tail { display: contents; }
-  /* min-width:0 has to be repeated on the toggle too — a grid item's own
-     min-width:0 doesn't stop ITS children (width:100% box) from carrying
-     their min-content size back up, which was blowing the column out past
-     the viewport (minmax(0,1fr) only works if nothing downstream re-imposes
-     a content-based floor) */
-  .pipeline-stage { flex: initial; min-width: 0; }
-  .pipeline-toggle { min-width: 0; }
-  .pipeline-stage[data-pd="0"] { grid-row: 1; grid-column: 2; }
-  .pipeline-arrow:nth-of-type(1) { grid-row: 2; grid-column: 2; }
-  .pipeline-stage[data-pd="1"] { grid-row: 3; grid-column: 2; }
-  .pipeline-arrow:nth-of-type(2) { grid-row: 4; grid-column: 2; }
-  .pipeline-stage[data-pd="2"] { grid-row: 5; grid-column: 2; }
-  .pipeline-arrow:nth-of-type(3) { grid-row: 6; grid-column: 2; }
-  .pipeline-stage[data-pd="3"] { grid-row: 7; grid-column: 2; }
-  .pipeline-arrow:nth-of-type(4) { grid-row: 8; grid-column: 2; }
-  .pipeline-stage[data-pd="4"] { grid-row: 9; grid-column: 2; }
-  .pipeline-arrow:nth-of-type(5) { grid-row: 10; grid-column: 2; }
-  .pipeline-stage[data-pd="5"] { grid-row: 11; grid-column: 2; }
-  /* Reset the desktop bracket (absolute, spanning .pipeline-tail, open
-     bottom) back to a normal closed box placed in the grid's skinny
-     left column, icon-only (no "Live Stream" text — there's no room) */
-  .pipeline-stage-skip {
-    position: static;
-    left: auto;
-    right: auto;
-    bottom: auto;
-    margin-bottom: 0;
-  }
-  .pipeline-stage-skip::after { content: none; }
-  .pipeline-stage[data-pd="6"] {
-    grid-row: 7 / 12;
-    grid-column: 1;
-    align-self: stretch;
-    width: auto;
-  }
-  .pipeline-stage-skip .pipeline-toggle {
+  /* Vertical stack: every stage centered and a bit thinner than the full
+     width, rather than stretched edge to edge. */
+  .pipeline { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .pipeline-row {
+    display: flex;
     flex-direction: column;
-    height: 100%;
-    justify-content: center;
-    text-align: center;
-    padding: 10px 4px;
-    border-bottom-style: dashed;
-    border-radius: 10px;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
   }
-  .pipeline-stage-skip .pipeline-label { display: none; }
-  /* Tap reveals to the right as a floating overlay instead of inline, so
-     it never pushes the stage list around */
-  .pipeline-stage-skip .pipeline-detail-wrap {
-    position: absolute;
-    top: 0;
-    left: 100%;
-    margin-left: 8px;
-    margin-top: 0;
-    width: 220px;
-    max-height: none;
-    overflow: visible;
-    z-index: 6;
+  .pipeline-tail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    position: relative;
+    flex: initial;
   }
-  .pipeline-stage-skip .pipeline-toggle[aria-expanded="true"] ~ .pipeline-detail-wrap {
-    margin-top: 0;
-  }
-  /* Larger, clearer color, and centered under/above the (now narrower)
-     stage column instead of left-aligned with padding */
+  /* width:100% + max-width (not a % width) avoids the shrink-to-fit trap:
+     align-items:center on the flex-column parents sizes children to
+     content unless they're given an explicit width to fill and cap */
+  .pipeline-stage { flex: initial; min-width: 0; width: 100%; max-width: 260px; }
+  .pipeline-toggle { min-width: 0; }
   .pipeline-arrow {
-    justify-self: center;
     padding-left: 0;
     font-size: 1.35rem;
     color: var(--accent);
     --arrow-angle: 90deg;
   }
+  /* Live Stream: a dotted vertical line to the left of steps 4-6, closing
+     with a rightward arrow into step 6 — sits in the margin the centered,
+     thinner stages already leave open, so it needs no reserved column. */
+  .pipeline-stage-skip {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 0;
+    right: auto;
+    width: 26px;
+    margin: 0;
+  }
+  .pipeline-stage-skip .pipeline-toggle {
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 2px 0 0;
+    background: transparent;
+    border: none;
+    border-left: 1px dashed var(--accent-2);
+    border-radius: 0;
+  }
+  .pipeline-stage-skip .pipeline-label { display: none; }
+  .pipeline-stage-skip::after {
+    content: "→";
+    position: absolute;
+    left: -3px;
+    right: auto;
+    bottom: -6px;
+    font-family: var(--mono);
+    font-size: 1rem;
+    line-height: 1;
+    color: var(--accent-2);
+  }
+  /* Tapped, this one shows info below itself — not to the right like the
+     numbered stages — since it's a thin strip with no room to its right */
+  .pipeline-stage-skip .pipeline-detail-wrap {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 10px;
+    margin-left: 0;
+    width: 200px;
+  }
 }
 /* Touch devices can't reliably hover, so detail text is tap-to-reveal:
    .pipeline-toggle sets aria-expanded via click/keydown (script.js), which
-   this rule reads to show/hide the (now inline, not overlaid) detail */
+   this rule reads to show/hide it. It opens as a floating overlay to the
+   right of the box — never pushing the rest of the list around. */
 @media (hover: none), (max-width: 640px) {
+  /* Fixed to the viewport's right edge rather than left:100% off the box —
+     the numbered stages are now centered with margin on both sides, so
+     "100% of the box" often isn't wide enough room to open a popup into.
+     script.js sets `top` inline (px, viewport-relative) when it opens,
+     since position:fixed can't otherwise know where the tapped box is. */
   .pipeline-detail-wrap {
-    position: static;
+    position: fixed;
+    left: auto;
+    right: 14px;
+    margin-left: 0;
     opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    pointer-events: none;
     transform: none;
-    transition: opacity 0.2s ease, max-height 0.25s ease;
-    margin-top: 0;
+    width: min(180px, calc(100vw - 28px));
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 6;
   }
   .pipeline-toggle[aria-expanded="true"] ~ .pipeline-detail-wrap {
     opacity: 1;
-    max-height: 240px;
     pointer-events: auto;
-    margin-top: 8px;
   }
+  /* The skip connector's popup opens directly below itself at the far
+     left, nowhere near the right edge — keep it relative to its own box
+     rather than viewport-fixed like the numbered stages above. */
+  .pipeline-stage-skip .pipeline-detail-wrap {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: auto;
+    margin-top: 10px;
+  }
+  /* Safety net: if an overlay nudges past the screen edge, clip it instead
+     of introducing a page-wide horizontal scrollbar */
+  body { overflow-x: hidden; }
 }
