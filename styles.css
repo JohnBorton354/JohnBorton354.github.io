@@ -482,51 +482,52 @@ footer {
      align-items:center on the flex-column parents sizes children to
      content unless they're given an explicit width to fill and cap */
   .pipeline-stage { flex: initial; min-width: 0; width: 100%; max-width: 150px; }
-  .pipeline-toggle { min-width: 0; }
+  .pipeline-toggle { min-width: 0; text-align: center; align-items: center; }
   .pipeline-arrow {
     padding-left: 0;
     font-size: 1.35rem;
     color: var(--accent);
     --arrow-angle: 90deg;
   }
-  /* Live Stream: a dotted vertical line to the left of steps 4-6, closing
-     with a rightward arrow into step 6 — sits in the margin the centered,
-     thinner stages already leave open, so it needs no reserved column. */
+  /* Live Stream: now that the centered, thinner stages leave real margin
+     on both sides, this uses that space as a proper dashed box (matching
+     the numbered stages' shape) instead of a bare skinny line. */
   .pipeline-stage-skip {
     position: absolute;
     top: 4px;
     bottom: 4px;
     left: 0;
     right: auto;
-    width: 26px;
+    width: 78px;
     margin: 0;
   }
   .pipeline-stage-skip .pipeline-toggle {
     width: 100%;
     height: 100%;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    padding: 2px 0 0;
+    text-align: center;
+    padding: 6px;
     background: transparent;
-    border: none;
-    border-left: 1px dashed var(--accent-2);
-    border-radius: 0;
+    border: 1px dashed var(--accent-2);
+    border-radius: 10px;
   }
-  .pipeline-stage-skip .pipeline-label { display: none; }
   .pipeline-stage-skip::after {
     content: "→";
     position: absolute;
-    left: -3px;
-    right: auto;
-    bottom: -6px;
+    left: auto;
+    right: -14px;
+    bottom: 50%;
+    transform: translateY(50%);
     font-family: var(--mono);
     font-size: 1rem;
     line-height: 1;
     color: var(--accent-2);
   }
   /* Tapped, this one shows info below itself — not to the right like the
-     numbered stages — since it's a thin strip with no room to its right */
+     numbered stages — since it's pinned to the far left with no room
+     to its right */
   .pipeline-stage-skip .pipeline-detail-wrap {
     position: absolute;
     top: 100%;
@@ -538,22 +539,20 @@ footer {
 }
 /* Touch devices can't reliably hover, so detail text is tap-to-reveal:
    .pipeline-toggle sets aria-expanded via click/keydown (script.js), which
-   this rule reads to show/hide it. It opens as a floating overlay to the
-   right of the box — never pushing the rest of the list around. */
+   this rule reads to show/hide it. It opens as a floating overlay flush
+   against the box's own right edge — never pushing the rest of the list
+   around — now that the centered/thinner stages leave real margin to
+   open into (no longer needs the viewport-edge-fixed fallback). */
 @media (hover: none), (max-width: 640px) {
-  /* Fixed to the viewport's right edge rather than left:100% off the box —
-     the numbered stages are now centered with margin on both sides, so
-     "100% of the box" often isn't wide enough room to open a popup into.
-     script.js sets `top` inline (px, viewport-relative) when it opens,
-     since position:fixed can't otherwise know where the tapped box is. */
   .pipeline-detail-wrap {
-    position: fixed;
-    left: auto;
-    right: 14px;
-    margin-left: 0;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    right: auto;
+    margin-left: 8px;
     opacity: 0;
     transform: none;
-    width: min(180px, calc(100vw - 28px));
+    width: 82px;
     pointer-events: none;
     transition: opacity 0.2s ease;
     z-index: 6;
@@ -564,7 +563,7 @@ footer {
   }
   /* The skip connector's popup opens directly below itself at the far
      left, nowhere near the right edge — keep it relative to its own box
-     rather than viewport-fixed like the numbered stages above. */
+     rather than left:100% like the numbered stages above. */
   .pipeline-stage-skip .pipeline-detail-wrap {
     position: absolute;
     top: 100%;
