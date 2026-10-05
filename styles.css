@@ -233,6 +233,7 @@ section > p:last-child { margin-bottom: 0; }
   gap: 6px;
 }
 .pipeline-stage { position: relative; flex: 1 1 130px; min-width: 76px; }
+.pipeline-hint { font-size: 0.8rem; color: var(--muted-dim); margin: 4px 0 0; }
 /* Long single words (e.g. "Presentation") can be wider than a narrow box;
    without this they overflow horizontally into the next box instead of
    breaking, which read as overlapping boxes */
