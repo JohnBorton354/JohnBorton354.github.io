@@ -489,8 +489,8 @@ footer {
     color: var(--accent);
     --arrow-angle: 90deg;
   }
-  /* Live Stream: a dotted line running down the left margin from step 4's
-     level to step 6's, ending in an arrow into 6 — not a boxed stage, since
+  /* Live Stream: a dotted bracket in the left margin — out from step 4's
+     level, down, then back in at step 6's level — not a boxed stage, since
      it's a shortcut past 5 rather than a step of its own. */
   .pipeline-stage-skip {
     position: absolute;
@@ -501,13 +501,18 @@ footer {
     width: 78px;
     margin: 0;
   }
+  /* Open-right bracket: top border = the line out of 4, left border = the
+     vertical drop, bottom border = the line back in to 6. */
   .pipeline-stage-skip::before {
     content: "";
     position: absolute;
     top: 2px;
-    bottom: 12px;
+    bottom: 2px;
     left: 3px;
+    right: 8px;
+    border-top: 2px dotted var(--accent-2);
     border-left: 2px dotted var(--accent-2);
+    border-bottom: 2px dotted var(--accent-2);
   }
   .pipeline-stage-skip .pipeline-toggle {
     width: 100%;
@@ -516,18 +521,28 @@ footer {
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 6px 4px 6px 12px;
+    padding: 6px 10px 6px 12px;
     background: transparent;
     border: none;
   }
-  /* Anchored to the bottom of the strip (step 6's level) — not 50%, which
-     lands on step 5 and was mistaken for pointing at the wrong step. */
+  /* The label text stays "⇢" in markup (matches the desktop flow), but the
+     mobile layout flows top-to-bottom, so the visible icon is swapped for a
+     downward arrow to match. */
+  .pipeline-stage-skip .pipeline-index {
+    font-size: 0;
+  }
+  .pipeline-stage-skip .pipeline-index::before {
+    content: "⇣";
+    font-size: 0.7rem;
+  }
+  /* Sits right at the bracket's bottom-right corner, next to step 6 — the
+     end of the line back in, not floating in the middle of the margin. */
   .pipeline-stage-skip::after {
     content: "→";
     position: absolute;
-    left: 0;
-    right: auto;
-    bottom: 2px;
+    left: auto;
+    right: 2px;
+    bottom: -2px;
     font-family: var(--mono);
     font-size: 1rem;
     line-height: 1;
